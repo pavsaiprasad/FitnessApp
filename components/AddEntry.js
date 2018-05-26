@@ -1,14 +1,22 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
+import { View, TouchableOpacity, Text } from 'react-native'
 import { getMetricMetaInfo } from '../utils/helpers'
-import Slider from './Slider'
+import Slide from './Slide'
 import Stepper from './Stepper'
 import DateHeader from './DateHeader'
+
+function SubmitBtn({onPress}){
+    return(
+        <TouchableOpacity onPress={onPress}>
+            <Text>SUBMIT</Text>
+        </TouchableOpacity>  
+    )
+}
 
 export default class AddEntry extends Component {
     state = {
         run: 0,
-        bike: 0,
+        bike: -5,
         swim: 0,
         sleep: 0,
         eat: 0,
@@ -40,6 +48,16 @@ export default class AddEntry extends Component {
             [metric]: value
         }))
     }
+
+    onSubmit = () =>{
+        this.setState({
+            run: 0,
+            bike: 0,
+            swim: 0,
+            sleep: 0,
+            eat: 0, 
+        })
+    }
     render() {
         const metaInfo = getMetricMetaInfo()
 
@@ -54,7 +72,7 @@ export default class AddEntry extends Component {
                         <View key={key}>
                             {getIcon()}
                             {type === 'slider'
-                                ? <Slider
+                                ? <Slide
                                     value={value}
                                     onChange={(value) => this.slide(key, value)}
                                     {...rest}
@@ -68,6 +86,8 @@ export default class AddEntry extends Component {
                         </View>
                     )
                 })}
+                <SubmitBtn onPress={this.onSubmit} />
+                
             </View>
         )
     }
