@@ -138,6 +138,12 @@ export function calculateDirection(heading) {
     return direction
 }
 
+export function getDailyReminderValue() {
+      return {
+    today: "👋 Don't forget to log your data today!"
+          }
+}
+
 export function timeToString(time = Date.now()) {
     const date = new Date(time)
     const todayUTC = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()))
