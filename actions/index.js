@@ -1,20 +1,16 @@
-import { RECEIVE_ENTRIES, ADD_ENTRY } from '../actions'
+export const RECEIVE_ENTRIES = 'RECEIVE_ENTRIES'
+export const ADD_ENTRY = 'ADD_ENTRY'
 
-function entries(state = {}, action) {
-    switch (action.type) {
-        case RECEIVE_ENTRIES:
-            return {
-                ...state,
-                ...action.entries,
-            }
-        case ADD_ENTRY:
-            return {
-                ...state,
-                ...action.entry
-            }
-        default:
-            return state
+export function receiveEntries(entries) {
+    return {
+        type: RECEIVE_ENTRIES,
+        entries,
     }
 }
 
-export default entries
+export function addEntry(entry) {
+    return {
+        type: ADD_ENTRY,
+        entry,
+    }
+}
