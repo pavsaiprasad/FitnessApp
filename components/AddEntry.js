@@ -1,19 +1,20 @@
 import React, { Component } from 'react'
 import { View, TouchableOpacity, Text, StyleSheet, Platform } from 'react-native'
-import {getMetricMetaInfo,timeToString,getDailyReminderValue} from '../utils/helpers'
+import { getMetricMetaInfo, timeToString, getDailyReminderValue } from '../utils/helpers'
 import Slide from './Slide'
 import Stepper from './Stepper'
 import DateHeader from './DateHeader'
 import { Ionicons } from '@expo/vector-icons'
 import TextButton from './TextButton'
 import { purple, black, white } from '../utils/colors'
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation'
 
-function SubmitBtn({onPress}){
-    return(
+function SubmitBtn({ onPress }) {
+    return (
         <TouchableOpacity onPress={onPress}>
             <Text style={styles.submitBtnText}>SUBMIT</Text>
-        </TouchableOpacity>  
+        </TouchableOpacity>
     )
 }
 
@@ -62,7 +63,7 @@ class AddEntry extends Component {
         }))
         this.setState(() => ({ run: 0, bike: 0, swim: 0, sleep: 0, eat: 0 }))
 
-        // Navigate to home
+        this.toHome()
 
         // Save to "DB"
 
@@ -74,9 +75,11 @@ class AddEntry extends Component {
         this.props.dispatch(addEntry({
             [key]: getDailyReminderValue()
         }))
-        // Route to Home
+        this.toHome()
 
-        // Update "DB"
+    }
+    toHome = () => {
+        this.props.navigation.dispatch(NavigationActions.back({ key: 'AddEntry' }))
     }
     render() {
         const metaInfo = getMetricMetaInfo()
@@ -88,7 +91,7 @@ class AddEntry extends Component {
                         size={100}
                     />
                     <Text>You already logged your information for today.</Text>
-                    <TextButton style={{ padding: 10 }}  onPress={this.reset}>
+                    <TextButton style={{ padding: 10 }} onPress={this.reset}>
                         Reset
           </TextButton>
                 </View>
@@ -120,7 +123,7 @@ class AddEntry extends Component {
                     )
                 })}
                 <SubmitBtn onPress={this.onSubmit} />
-                
+
             </View>
         )
     }
